@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>   
+emailTemplate = function (client,cnpj,estado,cidade,bairro,rua,numero,complemento,CEP,valor){ 
+        var html ='<h4><center> <b>CONTRATO DE LICENÇA DE USO E PRESTAÇÃO DE SERVIÇOS DE SOFTWARE</b></center></h4><p></p>\<p><strong>IDENTIFICAÇÃO DAS PARTES CONTRATANTES</strong></p>\
+        <p>CONTRATANTE: '+client+', com sede em '+cidade+', na Rua '+rua+', nº '+numero+', bairro '+bairro+', Cep '+CEP+', no Estado de '+estado+', inscrita no C.N.P.J. sob o nº '+cnpj+'.</p>\
+        <p>CONTRATADA: ........, com sede em ......, na Rua ......, nº ......, bairro ....., Cep ....., no Estado de ......., inscrita no C.N.P.J. sob o nº .........</p>\
+        <p>As partes acima identificadas têm, entre si, justo e acertado o presente Contrato de Licença de Uso e Prestação de Serviços de Software, que se regerá pelas cláusulas seguintes e pelas condições descritas no presente.</p>Cláusula 9ª. A CONTRATANTE pagará à CONTRATADA, pela licença de uso do Software a quantia de R$ '+valor+', sendo o pagamento a vista.</p>';
+return html;
+}
+
+
+
+<script>
+
+function onFormSubmit(e){
+    try {
+        var email = e.namedValues["Endereço de e-mail"].toString();
+        em = email.match (
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+            if (em != null ) {
+                var client = e.namedValues ["Nome do contratante"].toString();
+                var cnpj = e.namedValues ["CNPJ do contratante"].toString();
+                var estado = e.namedValues ["Estado"].toString();
+                var cidade = e.namedValues ["Cidade"].toString();
+                var bairro = e.namedValues ["Bairro"].toString();
+                var rua = e.namedValues ["Rua"].toString();
+                var numero = e.namedValues ["Numero"].toString();
+                var complemento = e.namedValues ["Complemento"].toString();
+                var CEP = e.namedValues ["CEP"].toString();
+                var valor = e.namedValues ["Valor"].toString();
+                var email_body = emailTemplate(client,cnpj,estado,cidade,bairro,rua,numero,complemento,CEP,valor);
+                var ccEmail = "seuemail@email.com";
+               \ var replyToEmail = "seuemail@email.com";
+                var advancedArgs = {name:"Nome da sua empresa",  cc:ccEmail, replyTo:replyToEmail, htmlBody:email_body};
+                MailApp.sendEmail(em[0],
+                "Contrato para", +client+ "- estilizado","",
+                advancedArgs
+                )
+            }
+    }
+    catch (e) {MailApp.sendEmail("seuemail@email.com", "Erro reportado", e.message);
+    }
+}
+
+
+ 
+</script>
+
+
+</html>
